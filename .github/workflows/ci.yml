@@ -126,10 +126,14 @@ jobs:
     env:
       VM_HOST: 192.168.56.101
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
+      - name: Checkout without Node actions
+        run: |
+          set -euo pipefail
+          git init .
+          git remote remove origin 2>/dev/null || true
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout --force --detach FETCH_HEAD
 
       - name: Deploy with Ansible
         working-directory: ansible
