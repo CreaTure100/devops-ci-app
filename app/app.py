@@ -18,7 +18,7 @@ def create_app():
             service="devops-ci-app",
             version="1.0.0",
             status="running",
-        )
+        
 
     return application
 
